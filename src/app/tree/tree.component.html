@@ -1,7 +1,0 @@
-<div [hidden]="!(nodesService.articles$ | async)">
-  <tree-root [nodes]="nodesService.articles$ | async" [options]="options" #tree>
-    <ng-template #treeNodeTemplate let-node let-index="index">
-      <span (click)="details(node.data)"><fa name="file"></fa> {{ node.data.article.title }}</span>
-    </ng-template>
-  </tree-root>
-</div>
