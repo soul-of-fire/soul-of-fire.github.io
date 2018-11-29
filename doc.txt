@@ -1,0 +1,83 @@
+https://angular2-tree.readme.io/docs
+
+// nodes = [
+  //   {
+  //     id: 1,
+  //     name: 'root1',
+  //     children: [
+  //       { id: 2, name: 'child1' },
+  //       { id: 3, name: 'child2' }
+  //     ]
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'root2',
+  //     children: [
+  //       { id: 5, name: 'child2.1' },
+  //       {
+  //         id: 6,
+  //         name: 'child2.2',
+  //         children: [
+  //           { id: 7, name: 'subsub' }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ];
+
+  bg-secondary text-white
+
+  array = [];
+  Object.keys(x).forEach(k => {
+    this.array.push(x[k]);
+  })
+  const aha = this.transform(this.array.filter(item => !item.treeParentId))
+  console.log(JSON.stringify(aha));
+
+  transform(parents) {
+    return parents.map(item => {
+      return {
+        id: item.treeId,
+        article: {
+          title: item.title,
+          header: item.header,
+          content: item.content,
+          footer: item.footer,
+          personal: false
+        },
+        children: this.transform(this.array.filter(o => o.treeParentId == item.treeId))
+      };
+    })
+  }
+
+@Effect() logIn$: Observable<Action> = this.actions$.pipe(
+    ofType(SIGN),
+    switchMap((user: CommonAction<any>) => from(this.authService.logIn(user)).pipe(
+      flatMap(() => from(this.db.list('note').valueChanges()).pipe(
+        map(data => { 
+          this.authService.loading$.next(false);
+          return new LogIn(data);
+        })
+      )))
+    )
+  );
+
+  this.nodesService.tree.treeModel.update();
+
+  // public getById(id: string) {
+  //   this.articles$.pipe(
+  //     flatMap(a => a),
+  //     map((article: any) => this.search(article.children, []).filter((a: any) => a.id == id)[0])
+  //   ).subscribe(x => console.log(x));
+  // }
+
+  // private search(children, array) {
+  //   children.forEach((a => {
+  //     if (!a.children || a.children.length == 0) {
+  //       array.push(a);
+  //     } else {
+  //       this.search(a.children, array);
+  //     }
+  //   }));
+  //   return array;
+  // }

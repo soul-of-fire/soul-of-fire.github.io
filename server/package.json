@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "test server",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "./node_modules/.bin/nodemon ./server.js --delay 1 --watch samples --watch server.js --watch server.helper.js",
+    "server": "node server.js"
+  },
+  "author": "experian",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
